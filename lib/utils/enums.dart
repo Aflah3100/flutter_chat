@@ -1,0 +1,1 @@
+enum LoginType { signin, singup }
