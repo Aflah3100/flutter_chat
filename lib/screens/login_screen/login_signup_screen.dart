@@ -1,5 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/database/models/user_model.dart';
+import 'package:flutter_chat/firebase/firebase_authentication/firebase_auth_functions.dart';
+import 'package:flutter_chat/screens/home_screen/screen_home.dart';
 import 'package:flutter_chat/utils/enums.dart';
+import 'package:flutter_chat/utils/widget_functions.dart';
 
 // ignore: must_be_immutable
 class ScreenSigninSignup extends StatelessWidget {
@@ -7,12 +12,48 @@ class ScreenSigninSignup extends StatelessWidget {
       : loginNotifier = ValueNotifier(loginType);
   ValueNotifier<LoginType> loginNotifier;
 
+  ValueNotifier<String> errorTextNotifier = ValueNotifier("");
+
+  //Text-Field-Controllers
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
+
+  //Keys
+  final formKey = GlobalKey<FormState>();
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  //Validate-UserDetails-Function
+  dynamic validateUserDetails(
+      {String? name,
+      required String email,
+      required String password,
+      String? confPassword}) {
+    if (name != null && name.isEmpty) {
+      return "Enter name";
+    } else if (email.isEmpty) {
+      return "Enter email id";
+    } else if (password.isEmpty) {
+      return "Enter password";
+    } else if (confPassword != null && confPassword.isEmpty) {
+      return "Confirm entered password";
+    } else if (name != null && (password.length < 8 || password.length > 15)) {
+      return "Password must be of length 8-15";
+    } else if (name != null && (password != confPassword)) {
+      return "Passwords doesn't match";
+    } else {
+      return true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
     final width = MediaQuery.of(context).size.width * 1;
 
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         //Base-Stack-Widget
@@ -85,93 +126,79 @@ class ScreenSigninSignup extends StatelessWidget {
                             color: Colors.white,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(20.0))),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            //Name-Text
-                            (value == LoginType.singup)
-                                ? const Text(
-                                    'Name',
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                : const SizedBox(),
-                            SizedBox(
-                              height: height * 0.005,
-                            ),
-                            //Name-Text-Field
-                            (value == LoginType.singup)
-                                ? Card(
-                                    color: Colors.white,
-                                    elevation: 4.0,
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                          prefixIcon: const Icon(
-                                              Icons.person_2_outlined),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              borderSide: const BorderSide(
-                                                  color: Color.fromARGB(
-                                                      255, 207, 197, 197))),
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0))),
-                                    ),
-                                  )
-                                : const SizedBox(),
-                            SizedBox(height: height * 0.01),
-
-                            //Email-Text
-                            const Text(
-                              'Email',
-                              style: TextStyle(
-                                  fontSize: 20.0, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: height * 0.005,
-                            ),
-                            //Email-Text-Field
-                            Card(
-                              color: Colors.white,
-                              elevation: 4.0,
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  prefixIcon: const Icon(Icons.email_outlined),
-                                  enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(10.0),
-                                      borderSide: const BorderSide(
-                                          color: Color.fromARGB(
-                                              255, 207, 197, 197))),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                ),
+                        //User-Details-Form
+                        child: Form(
+                          key: formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              //Name-Text
+                              (value == LoginType.singup)
+                                  ? const Text(
+                                      'Name',
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  : const SizedBox(),
+                              SizedBox(
+                                height: height * 0.005,
                               ),
-                            ),
-                            SizedBox(
-                              height: height * 0.01,
-                            ),
+                              //Name-Text-Field
+                              (value == LoginType.singup)
+                                  ? Card(
+                                      color: Colors.white,
+                                      elevation: 4.0,
+                                      child: TextFormField(
+                                        controller: nameController,
+                                        keyboardType: TextInputType.name,
+                                        validator: (name) =>
+                                            (name == null || name.isEmpty)
+                                                ? 'Enter User Name'
+                                                : null,
+                                        decoration: InputDecoration(
+                                            prefixIcon: const Icon(
+                                                Icons.person_2_outlined),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                borderSide: const BorderSide(
+                                                    color: Color.fromARGB(
+                                                        255, 207, 197, 197))),
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0))),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              SizedBox(height: height * 0.01),
 
-                            //Password-Text
-                            const Text(
-                              'Password',
-                              style: TextStyle(
-                                  fontSize: 20.0, fontWeight: FontWeight.bold),
-                            ),
-                            SizedBox(
-                              height: height * 0.005,
-                            ),
-                            //Password-Text-Field
-                            Card(
-                              color: Colors.white,
-                              elevation: 4.0,
-                              child: TextFormField(
-                                decoration: InputDecoration(
+                              //Email-Text
+                              const Text(
+                                'Email',
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: height * 0.005,
+                              ),
+                              //Email-Text-Field
+                              Card(
+                                color: Colors.white,
+                                elevation: 4.0,
+                                child: TextFormField(
+                                  controller: emailController,
+                                  keyboardType: TextInputType.emailAddress,
+                                  validator: (email) =>
+                                      (email == null || email.isEmpty)
+                                          ? 'Enter email address'
+                                          : null,
+                                  decoration: InputDecoration(
                                     prefixIcon:
-                                        const Icon(Icons.password_outlined),
+                                        const Icon(Icons.email_outlined),
                                     enabledBorder: OutlineInputBorder(
                                         borderRadius:
                                             BorderRadius.circular(10.0),
@@ -179,130 +206,219 @@ class ScreenSigninSignup extends StatelessWidget {
                                             color: Color.fromARGB(
                                                 255, 207, 197, 197))),
                                     border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0))),
+                                      borderRadius: BorderRadius.circular(10.0),
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: height * 0.01,
-                            ),
+                              SizedBox(
+                                height: height * 0.01,
+                              ),
 
-                            //Forgot-Password-Text
-                            (value == LoginType.signin)
-                                ? Padding(
-                                    padding:
-                                        EdgeInsets.only(left: width * 0.43),
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: const Text(
-                                        'Forgot Password ?',
-                                        style: TextStyle(
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.w500),
-                                      ),
-                                    ),
-                                  )
-                                : const SizedBox(),
+                              //Password-Text
+                              const Text(
+                                'Password',
+                                style: TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(
+                                height: height * 0.005,
+                              ),
+                              //Password-Text-Field
+                              Card(
+                                color: Colors.white,
+                                elevation: 4.0,
+                                child: TextFormField(
+                                  controller: passwordController,
+                                  obscureText: true,
+                                  keyboardType: TextInputType.visiblePassword,
+                                  validator: (password) =>
+                                      (password == null || password.isEmpty)
+                                          ? 'Enter password'
+                                          : null,
+                                  decoration: InputDecoration(
+                                      prefixIcon:
+                                          const Icon(Icons.password_outlined),
+                                      enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                          borderSide: const BorderSide(
+                                              color: Color.fromARGB(
+                                                  255, 207, 197, 197))),
+                                      border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0))),
+                                ),
+                              ),
+                              SizedBox(
+                                height: height * 0.01,
+                              ),
 
-                            //Confirm-Password-Text
-                            (value == LoginType.singup)
-                                ? const Text(
-                                    'Confirm Password',
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold),
-                                  )
-                                : const SizedBox(),
-                            SizedBox(
-                              height: height * 0.005,
-                            ),
-                            //Confirm-Password-Text-Field
-                            (value == LoginType.singup)
-                                ? Card(
-                                    color: Colors.white,
-                                    elevation: 4.0,
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                          prefixIcon: const Icon(
-                                              Icons.password_outlined),
-                                          enabledBorder: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              borderSide: const BorderSide(
-                                                  color: Color.fromARGB(
-                                                      255, 207, 197, 197))),
-                                          border: OutlineInputBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0))),
-                                    ),
-                                  )
-                                : const SizedBox(),
-                            SizedBox(
-                              height: height * 0.03,
-                            ),
-
-                            //Login-Button
-                            (value == LoginType.signin)
-                                ? Center(
-                                    child: Container(
-                                      width: width * 0.40,
-                                      height: height * 0.06,
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xff4B70F5),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      child: const Center(
-                                        child: Text(
-                                          'Sign In',
+                              //Forgot-Password-Text
+                              (value == LoginType.signin)
+                                  ? Padding(
+                                      padding:
+                                          EdgeInsets.only(left: width * 0.43),
+                                      child: GestureDetector(
+                                        onTap: () {},
+                                        child: const Text(
+                                          'Forgot Password ?',
                                           style: TextStyle(
-                                              fontSize: 20.0,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w700),
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w500),
                                         ),
                                       ),
-                                    ),
-                                  )
-                                : const SizedBox(),
-                            SizedBox(
-                              height: ((value == LoginType.signin))
-                                  ? height * 0.03
-                                  : null,
-                            ),
+                                    )
+                                  : const SizedBox(),
 
-                            //Login-SignUp-Text-Row
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    (value == LoginType.singup)
-                                        ? 'Already have an account?  '
-                                        : 'Dont have an account?   ',
-                                    style: const TextStyle(
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.normal),
-                                  ),
-                                  GestureDetector(
-                                    onTap: () {
-                                      if (loginNotifier.value ==
-                                          LoginType.signin) {
-                                        loginNotifier.value = LoginType.singup;
-                                      } else {
-                                        loginNotifier.value = LoginType.signin;
-                                      }
-                                    },
-                                    child: Text(
+                              //Confirm-Password-Text
+                              (value == LoginType.singup)
+                                  ? const Text(
+                                      'Confirm Password',
+                                      style: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold),
+                                    )
+                                  : const SizedBox(),
+                              SizedBox(
+                                height: height * 0.005,
+                              ),
+                              //Confirm-Password-Text-Field
+                              (value == LoginType.singup)
+                                  ? Card(
+                                      color: Colors.white,
+                                      elevation: 4.0,
+                                      child: TextFormField(
+                                        controller: confirmPasswordController,
+                                        obscureText: true,
+                                        validator: (pass) =>
+                                            (pass == null || pass.isEmpty)
+                                                ? 'Confirm entered Password'
+                                                : null,
+                                        decoration: InputDecoration(
+                                            prefixIcon: const Icon(
+                                                Icons.password_outlined),
+                                            enabledBorder: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                                borderSide: const BorderSide(
+                                                    color: Color.fromARGB(
+                                                        255, 207, 197, 197))),
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0))),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              SizedBox(
+                                height: height * 0.03,
+                              ),
+
+                              //Login-Button
+                              (value == LoginType.signin)
+                                  ? Center(
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          dynamic result = validateUserDetails(
+                                              email: emailController.text,
+                                              password:
+                                                  passwordController.text);
+                                          if (result is String) {
+                                            errorTextNotifier.value = result;
+                                          } else {
+                                            errorTextNotifier.value = "";
+                                            //Client-Side-User-Validation-Success
+                                            dynamic authResult =
+                                                await FirebaseAuthFunctions
+                                                    .instance
+                                                    .authenticateUserUsingEmail(
+                                                        email: emailController
+                                                            .text,
+                                                        password:
+                                                            passwordController
+                                                                .text);
+                                            if (authResult is User) {
+                                              //User-Authentication-Success
+                                              Navigator.of(scaffoldKey
+                                                      .currentContext!)
+                                                  .pushReplacement(
+                                                      MaterialPageRoute(
+                                                          builder: (ctx) =>
+                                                              ScreenHome(
+                                                                  loggedUser:
+                                                                      authResult)));
+                                            } else {
+                                              showFirebaseErrorSnackBar(
+                                                  authResult,
+                                                  scaffoldKey.currentContext!);
+                                            }
+                                          }
+                                        },
+                                        child: Container(
+                                          width: width * 0.40,
+                                          height: height * 0.06,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xff4B70F5),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          child: const Center(
+                                            child: Text(
+                                              'Sign In',
+                                              style: TextStyle(
+                                                  fontSize: 20.0,
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  : const SizedBox(),
+                              SizedBox(
+                                height: ((value == LoginType.signin))
+                                    ? height * 0.03
+                                    : null,
+                              ),
+
+                              //Login-SignUp-Text-Row
+                              Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
                                       (value == LoginType.singup)
-                                          ? 'Sign In Now! '
-                                          : 'Sign Up Now! ',
+                                          ? 'Already have an account?  '
+                                          : 'Dont have an account?   ',
                                       style: const TextStyle(
                                           fontSize: 15.0,
-                                          fontWeight: FontWeight.bold,
-                                          color: Color(0xff4B70F5)),
+                                          fontWeight: FontWeight.normal),
                                     ),
-                                  )
-                                ])
-                          ],
+                                    GestureDetector(
+                                      onTap: () {
+                                        if (loginNotifier.value ==
+                                            LoginType.signin) {
+                                          loginNotifier.value =
+                                              LoginType.singup;
+                                        } else {
+                                          loginNotifier.value =
+                                              LoginType.signin;
+                                        }
+                                      },
+                                      child: Text(
+                                        (value == LoginType.singup)
+                                            ? 'Sign In Now! '
+                                            : 'Sign Up Now! ',
+                                        style: const TextStyle(
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.bold,
+                                            color: Color(0xff4B70F5)),
+                                      ),
+                                    )
+                                  ])
+                            ],
+                          ),
                         ),
                       );
                     }),
@@ -320,7 +436,40 @@ class ScreenSigninSignup extends StatelessWidget {
                               right: height * 0.03,
                               left: height * 0.04,
                               child: GestureDetector(
-                                onTap: () {},
+                                onTap: () async {
+                                  dynamic result = validateUserDetails(
+                                      name: nameController.text,
+                                      email: emailController.text,
+                                      password: passwordController.text,
+                                      confPassword:
+                                          confirmPasswordController.text);
+                                  if (result is String) {
+                                    errorTextNotifier.value = result;
+                                  } else {
+                                    errorTextNotifier.value = "";
+                                    //Client-Side-User-Validation-Success
+                                    UserModel user = UserModel(
+                                        userId: null,
+                                        name: nameController.text,
+                                        email: emailController.text,
+                                        password: passwordController.text);
+                                    dynamic authResult =
+                                        await FirebaseAuthFunctions.instance
+                                            .regitserUserUsingEmail(user: user);
+
+                                    if (authResult is User) {
+                                      //Registration Success
+                                      Navigator.of(scaffoldKey.currentContext!)
+                                          .pushReplacement(MaterialPageRoute(
+                                              builder: (ctx) => ScreenHome(
+                                                  loggedUser: authResult)));
+                                    } else {
+                                      //Registration-Failed
+                                      showFirebaseErrorSnackBar(authResult,
+                                          scaffoldKey.currentContext!);
+                                    }
+                                  }
+                                },
                                 child: Container(
                                   width: width,
                                   height: height * 0.07,
@@ -341,6 +490,29 @@ class ScreenSigninSignup extends StatelessWidget {
                               ),
                             )
                           : const SizedBox();
+                }),
+            //Error-Text-Notifier
+            ValueListenableBuilder(
+                valueListenable: errorTextNotifier,
+                builder: (ctx, errorText, _) {
+                  return //Error-Text
+                      Positioned(
+                    top: height * 0.88,
+                    child: Container(
+                      width: width,
+                      height: height * 0.05,
+                      color: Colors.transparent,
+                      child: Center(
+                        child: Text(
+                          errorText,
+                          style: const TextStyle(
+                              fontSize: 20.0,
+                              color: Colors.red,
+                              fontWeight: FontWeight.w700),
+                        ),
+                      ),
+                    ),
+                  );
                 })
           ],
         ),
