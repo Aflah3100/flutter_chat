@@ -9,7 +9,6 @@ class ScreenSigninSignup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
     final height = MediaQuery.of(context).size.height * 1;
     final width = MediaQuery.of(context).size.width * 1;
 
@@ -26,8 +25,9 @@ class ScreenSigninSignup extends StatelessWidget {
                 width: width,
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(colors: [
+                    Color(0xff402E7A),
                     Color(0xff5356FF),
-                    Color(0xff378CE7),
+                    // Color(0xff378CE7),
                     // Color(0xff4B70F5),
                     // Color(0xff67C6E3),
                   ], begin: Alignment.centerLeft, end: Alignment.topRight),

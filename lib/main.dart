@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/screens/home_screen/screen_home.dart';
 import 'package:flutter_chat/screens/login_screen/login_signup_screen.dart';
 import 'package:flutter_chat/utils/enums.dart';
 
@@ -20,9 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff5356FF)),
         useMaterial3: true,
       ),
-      home: ScreenSigninSignup(
-        loginType: LoginType.signin,
-      ),
+      home:const  ScreenHome(),
     );
   }
 }
