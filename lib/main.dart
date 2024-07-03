@@ -1,9 +1,16 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/firebase/firebase_options.dart';
 import 'package:flutter_chat/screens/home_screen/screen_home.dart';
-import 'package:flutter_chat/screens/login_screen/login_signup_screen.dart';
-import 'package:flutter_chat/utils/enums.dart';
+import 'package:flutter_chat/utils/assets.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  //Loading env variables & connecting to firebase.
+  await dotenv.load(fileName: environmentvariables);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }
 
@@ -21,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xff5356FF)),
         useMaterial3: true,
       ),
-      home:const  ScreenHome(),
+      home: const ScreenHome(),
     );
   }
 }
