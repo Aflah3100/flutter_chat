@@ -57,4 +57,15 @@ class FirebaseAuthFunctions {
       return e;
     }
   }
+
+  //Reset-Password-By-Registered-Email-Address
+  Future<dynamic> resetPasswordUsingEmail({required String email}) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+
+      return true;
+    } on FirebaseException catch (e) {
+      return e;
+    }
+  }
 }

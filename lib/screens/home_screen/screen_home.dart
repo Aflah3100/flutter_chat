@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:flutter_chat/screens/chat_screen/user_chat_screen.dart';
-import 'package:flutter_chat/utils/assets.dart';
+import 'package:flutter_chat/utils/utils.dart';
 
 // ignore: must_be_immutable
 class ScreenHome extends StatelessWidget {

@@ -4,6 +4,7 @@ import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:flutter_chat/firebase/firebase_authentication/firebase_auth_functions.dart';
 import 'package:flutter_chat/screens/home_screen/screen_home.dart';
 import 'package:flutter_chat/utils/enums.dart';
+import 'package:flutter_chat/utils/utils.dart';
 import 'package:flutter_chat/utils/widget_functions.dart';
 
 // ignore: must_be_immutable
@@ -261,7 +262,11 @@ class ScreenSigninSignup extends StatelessWidget {
                                       padding:
                                           EdgeInsets.only(left: width * 0.43),
                                       child: GestureDetector(
-                                        onTap: () {},
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .pushReplacementNamed(
+                                                  resetPasswordScreen);
+                                        },
                                         child: const Text(
                                           'Forgot Password ?',
                                           style: TextStyle(
