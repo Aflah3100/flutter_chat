@@ -37,6 +37,6 @@ class MyApp extends StatelessWidget {
               ScreenSigninSignup(loginType: LoginType.singup),
           resetPasswordScreen: (ctx) => ScreenResetPassword()
         },
-        home: ScreenSigninSignup(loginType: LoginType.signin));
+        home: ScreenSigninSignup(loginType: LoginType.singup));
   }
 }
