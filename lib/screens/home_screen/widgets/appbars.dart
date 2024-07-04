@@ -39,14 +39,19 @@ class ChatsAppBar extends StatelessWidget implements PreferredSizeWidget {
               border: InputBorder.none,
               hintStyle: const TextStyle(
                   color: Colors.white54, fontWeight: FontWeight.w200),
-              hintText: 'Search',
-              prefixIcon: const Icon(
-                Icons.search_outlined,
-                color: Colors.white54,
-              ),
-              suffixIcon: IconButton(
+              hintText: 'Search Users',
+              prefixIcon: IconButton(
                   onPressed: () {
                     searchNotifier.value = false;
+                  },
+                  icon: const Icon(
+                    Icons.arrow_back_outlined,
+                    color: Colors.white54,
+                  )),
+              suffixIcon: IconButton(
+                  onPressed: () {
+                    searchController.text = "";
+                    searchNotifier.notifyListeners();
                   },
                   icon: const Icon(
                     Icons.close,
