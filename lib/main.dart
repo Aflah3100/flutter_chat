@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:flutter_chat/firebase/config/firebase_options.dart';
 import 'package:flutter_chat/screens/forgot_password_screen/reset_password_screen.dart';
+import 'package:flutter_chat/screens/home_screen/screen_home.dart';
 import 'package:flutter_chat/screens/login_screen/login_signup_screen.dart';
 import 'package:flutter_chat/utils/utils.dart';
 import 'package:flutter_chat/utils/enums.dart';
@@ -37,6 +39,10 @@ class MyApp extends StatelessWidget {
               ScreenSigninSignup(loginType: LoginType.singup),
           resetPasswordScreen: (ctx) => ScreenResetPassword()
         },
-        home: ScreenSigninSignup(loginType: LoginType.singup));
+        home: ScreenHome(
+            loggedUser: UserModel(
+                userId: 'dummy-user-id',
+                name: 'dummy-name',
+                email: 'dummy-email')));
   }
 }

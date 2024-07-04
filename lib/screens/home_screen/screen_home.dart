@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:flutter_chat/screens/chat_screen/user_chat_screen.dart';
+import 'package:flutter_chat/screens/home_screen/widgets/appbars.dart';
 import 'package:flutter_chat/utils/utils.dart';
 
 // ignore: must_be_immutable
 class ScreenHome extends StatelessWidget {
   ScreenHome({super.key, required this.loggedUser});
 
+  ValueNotifier<bool> searchNotifier = ValueNotifier(false);
   //LoggedIn-User-Details (UserModel Object)
   UserModel loggedUser;
   @override
@@ -15,30 +17,9 @@ class ScreenHome extends StatelessWidget {
     final width = MediaQuery.of(context).size.width * 1;
     return Scaffold(
       backgroundColor: const Color(0xff492E87),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: ListTile(
-          leading: const Text(
-            'Chats',
-            style: TextStyle(fontSize: 25.0, color: Colors.white70),
-          ),
-          trailing: GestureDetector(
-            onTap: () {},
-            child: Container(
-              height: height * 0.04,
-              width: width * 0.08,
-              decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 60, 38, 111),
-                  borderRadius: BorderRadius.circular(30.0)),
-              child: const Center(
-                  child: Icon(
-                Icons.search_outlined,
-                color: Colors.white70,
-              )),
-            ),
-          ),
-        ),
-      ),
+
+      appBar: ChatsAppBar(
+          width: width, height: height, searchNotifer: searchNotifier),
       //Base-Container
       body: Container(
           padding: EdgeInsets.all(height * 0.02),
