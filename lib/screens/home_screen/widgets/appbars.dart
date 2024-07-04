@@ -1,18 +1,24 @@
 import 'package:flutter/material.dart';
+
 class ChatsAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ChatsAppBar(
       {super.key,
       required this.width,
       required this.height,
-      required this.searchNotifer});
+      required this.searchNotifer,
+      required this.searchController});
 
   final double width;
   final double height;
   final ValueNotifier<bool> searchNotifer;
+  final TextEditingController searchController;
 
 //Search App bar function -> returns appbar with search text field
   AppBar getSearchAppBar(
-      double width, double height, ValueNotifier<bool> searchNotifier) {
+    double width,
+    double height,
+    ValueNotifier<bool> searchNotifier,
+  ) {
     return AppBar(
       backgroundColor: Colors.transparent,
       centerTitle: true,
@@ -26,6 +32,8 @@ class ChatsAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: const Color.fromARGB(255, 60, 38, 111)),
         //Search-TextField
         child: TextField(
+          controller: searchController,
+          onChanged: (_) => searchNotifier.notifyListeners(),
           style: const TextStyle(color: Colors.white),
           decoration: InputDecoration(
               border: InputBorder.none,
