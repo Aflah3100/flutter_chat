@@ -159,7 +159,7 @@ class SignInButton extends StatelessWidget {
                   email: emailController.text,
                   password: passwordController.text);
 
-          if (authResult is User) {
+          if (authResult is UserModel) {
             //User-Authentication-Success
             Navigator.of(scaffoldKey.currentContext!).pushReplacement(
                 MaterialPageRoute(
@@ -230,15 +230,14 @@ class SignUpButton extends StatelessWidget {
         } else {
           errorTextNotifier.value = "";
           //Client-Side-User-Validation-Success
-          UserModel user = UserModel(
-              userId: null,
-              name: nameController.text,
-              email: emailController.text,
-              password: passwordController.text);
-          dynamic authResult = await FirebaseAuthFunctions.instance
-              .regitserUserUsingEmail(user: user);
 
-          if (authResult is User) {
+          dynamic authResult = await FirebaseAuthFunctions.instance
+              .regitserUserUsingEmail(
+                  name: nameController.text,
+                  email: emailController.text,
+                  password: passwordController.text);
+
+          if (authResult is UserModel) {
             //Registration Success
             Navigator.of(scaffoldKey.currentContext!).pushReplacement(
                 MaterialPageRoute(

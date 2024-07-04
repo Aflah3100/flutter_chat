@@ -1,14 +1,14 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:flutter_chat/screens/chat_screen/user_chat_screen.dart';
 import 'package:flutter_chat/utils/utils.dart';
 
 // ignore: must_be_immutable
 class ScreenHome extends StatelessWidget {
-    ScreenHome({super.key,required this.loggedUser});
+  ScreenHome({super.key, required this.loggedUser});
 
-  //LoggedIn-User-Details
-  User loggedUser;
+  //LoggedIn-User-Details (UserModel Object)
+  UserModel loggedUser;
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;

@@ -10,28 +10,31 @@ class FirebaseAuthFunctions {
   factory FirebaseAuthFunctions() => instance;
 
   //Registering new user and save details to firestore.
-  Future<dynamic> regitserUserUsingEmail({required UserModel user}) async {
+  Future<dynamic> regitserUserUsingEmail(
+      {required String name,
+      required String email,
+      required String password}) async {
     try {
       //Authenticating new user
       UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: user.email, password: user.password);
+          .createUserWithEmailAndPassword(email: email, password: password);
 
       User? currentUser = userCredential.user;
 
       if (currentUser != null) {
         await FirebaseAuth.instance.currentUser!
-            .updateProfile(displayName: user.name);
+            .updateProfile(displayName: name);
         await currentUser.reload();
-
-        user.userId = currentUser.uid;
+        //Creating-User-Model
+        UserModel userModel =
+            UserModel(userId: currentUser.uid, name: name, email: email);
 
         //Save-data-to-firebase
         await FirebaseFirestore.instance
             .collection(userCollections)
-            .doc(user.userId)
-            .set(user.toMap());
-        return currentUser;
+            .doc(userModel.userId)
+            .set(userModel.toMap());
+        return userModel;
       } else {
         return FirebaseAuthException(code: "Error Registering New User!");
       }
@@ -49,7 +52,12 @@ class FirebaseAuthFunctions {
       User? currentUser = userCredential.user;
 
       if (currentUser != null) {
-        return currentUser;
+        //Creating-User-Model
+        UserModel userModel = UserModel(
+            userId: currentUser.uid,
+            name: currentUser.displayName!,
+            email: email);
+        return userModel;
       } else {
         return FirebaseAuthException(code: "Error Signing In!");
       }
