@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/utils/enums.dart';
 
@@ -19,20 +18,18 @@ class LinearTopContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         padding: EdgeInsets.only(top: height * 0.03),
-        height: height / 3.5,
+        height: height / 3,
         width: width,
         decoration: BoxDecoration(
           gradient: const LinearGradient(colors: [
-            Color(0xff402E7A),
-            Color(0xff5356FF),
-            // Color(0xff378CE7),
-            // Color(0xff4B70F5),
-            // Color(0xff67C6E3),
-          ], begin: Alignment.centerLeft, end: Alignment.topRight),
-          borderRadius: BorderRadius.vertical(
-              bottom: Radius.elliptical(width, 100.0)),
+            Color(0xff4A249D),
+            Color(0xFF640D6B),
+            // Color(0xff26355D),
+          ], begin: Alignment.topLeft, end: Alignment.bottomRight),
+          borderRadius:
+              BorderRadius.vertical(bottom: Radius.elliptical(width, 100.0)),
         ),
-    
+
         //Top-Text-Builder
         child: ValueListenableBuilder(
             valueListenable: loginNotifier,

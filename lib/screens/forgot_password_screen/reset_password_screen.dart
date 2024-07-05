@@ -39,9 +39,11 @@ class ScreenResetPassword extends StatelessWidget {
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
                       colors: [
-                        Color(0xff4A249D),
-                        Color(0xFF640D6B),
-                        // Color(0xff26355D),
+                        Color(0xff402E7A),
+                        Color(0xff5356FF),
+                        // Color(0xff378CE7),
+                        // Color(0xff4B70F5),
+                        // Color(0xff67C6E3),
                       ]),
                   borderRadius: BorderRadius.vertical(
                       bottom: Radius.elliptical(width, 150))),
@@ -157,7 +159,7 @@ class ScreenResetPassword extends StatelessWidget {
                             width: width * 0.40,
                             height: height * 0.06,
                             decoration: BoxDecoration(
-                              color: const Color(0xff401F71),
+                              color: const Color(0xff4B70F5),
                               borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: const Center(
@@ -196,7 +198,7 @@ class ScreenResetPassword extends StatelessWidget {
                                 style: TextStyle(
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.bold,
-                                    color: Color(0xff26355D)),
+                                    color: Color(0xff378CE7)),
                               ),
                             )
                           ]),

@@ -64,7 +64,7 @@ class ScreenSigninSignup extends StatelessWidget {
             //SignIn-SignUp-Base-Container
             Container(
               margin: EdgeInsets.symmetric(
-                  vertical: height * 0.22, horizontal: height * 0.03),
+                  vertical: height * 0.26, horizontal: height * 0.03),
               child: Material(
                 elevation: 5.0,
                 shadowColor: Colors.grey,
@@ -78,7 +78,7 @@ class ScreenSigninSignup extends StatelessWidget {
                           Container(
                         padding: EdgeInsets.all(height * 0.02),
                         width: width,
-                        height: height * 0.53,
+                        height: height * 0.58,
                         decoration: const BoxDecoration(
                             color: Colors.white,
                             borderRadius:
@@ -201,7 +201,7 @@ class ScreenSigninSignup extends StatelessWidget {
                   return //Sign-Up-Button
                       (value == LoginType.singup)
                           ? Positioned(
-                              top: height * 0.80,
+                              top: height * 0.86,
                               right: height * 0.03,
                               left: height * 0.04,
                               child: SignUpButton(

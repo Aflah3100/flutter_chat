@@ -1,5 +1,4 @@
 // ignore_for_file: must_be_immutable
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:flutter_chat/firebase/firebase_authentication/firebase_auth_functions.dart';
@@ -77,7 +76,10 @@ class ForgotPasswordTextButton extends StatelessWidget {
         },
         child: const Text(
           'Forgot Password ?',
-          style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w500),
+          style: TextStyle(
+              fontSize: 18.0,
+              fontWeight: FontWeight.w500,
+              color: Color(0xff26355D)),
         ),
       ),
     );
@@ -117,7 +119,7 @@ class SignSignUpTextRow extends StatelessWidget {
           style: const TextStyle(
               fontSize: 15.0,
               fontWeight: FontWeight.bold,
-              color: Color(0xff4B70F5)),
+              color: Color(0xff26355D)),
         ),
       )
     ]);
@@ -178,7 +180,7 @@ class SignInButton extends StatelessWidget {
         width: width * 0.40,
         height: height * 0.06,
         decoration: BoxDecoration(
-          color: const Color(0xff4B70F5),
+          color: const Color(0xff4A249D),
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: const Center(
@@ -261,7 +263,7 @@ class SignUpButton extends StatelessWidget {
         width: width,
         height: height * 0.07,
         decoration: BoxDecoration(
-          color: const Color(0xff4B70F5),
+          color: const Color(0xff4A249D),
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: const Center(

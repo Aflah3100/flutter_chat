@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/firebase/firebase_authentication/firebase_auth_functions.dart';
 import 'package:flutter_chat/services/shared_preferences/shared_prefs.dart';

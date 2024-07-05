@@ -48,6 +48,7 @@ class ScreenUserChat extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
+              //Fetch-Chats-Stream
               child: FetchChatsStreamBuilder(
                   chatRoomId: chatRoomId,
                   loggedUserName: loggedUserName,
