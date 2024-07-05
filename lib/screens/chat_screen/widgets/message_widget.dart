@@ -1,21 +1,23 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/database/models/chat_message_model.dart';
 
 //Send Message container widget
 class SentMessageBox extends StatelessWidget {
-  const SentMessageBox({
-    super.key,
-    required this.height,
-    required this.width,
-  });
+  const SentMessageBox(
+      {super.key,
+      required this.height,
+      required this.width,
+      required this.messageModel});
 
   final double height;
   final double width;
+  final ChatMessageModel messageModel;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(height * 0.02),
+      padding: EdgeInsets.only(
+          left: height * 0.02, right: height * 0.02, top: height * 0.02),
       child: Align(
         alignment: Alignment.bottomRight,
         child: Container(
@@ -29,11 +31,12 @@ class SentMessageBox extends StatelessWidget {
               bottomLeft: Radius.circular(10.0),
             ),
           ),
-          child: const Wrap(
+          child: Wrap(
             children: [
               Text(
-                'Hi, How are you? How\'s the day',
-                style: TextStyle(
+                //Display-chat-message
+                messageModel.message,
+                style: const TextStyle(
                   fontSize: 20.0,
                   color: Colors.black87,
                   fontWeight: FontWeight.normal,
@@ -47,22 +50,22 @@ class SentMessageBox extends StatelessWidget {
   }
 }
 
-
 //Recieved Message Container Widget
 class RecievedMessageBox extends StatelessWidget {
-  const RecievedMessageBox({
-    super.key,
-    required this.height,
-    required this.width,
-  });
+  const RecievedMessageBox(
+      {super.key,
+      required this.height,
+      required this.width,
+      required this.messageModel});
 
   final double height;
   final double width;
-
+  final ChatMessageModel messageModel;
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(height * 0.01),
+      padding: EdgeInsets.only(
+          left: height * 0.01, right: height * 0.01, top: height * 0.01),
       child: Align(
         alignment: Alignment.bottomLeft,
         child: Container(
@@ -76,11 +79,12 @@ class RecievedMessageBox extends StatelessWidget {
               bottomRight: Radius.circular(10.0),
             ),
           ),
-          child: const Wrap(
+          child: Wrap(
             children: [
               Text(
-                'Iam fine. What about you',
-                style: TextStyle(
+                //Display-chat-message
+                messageModel.message,
+                style: const TextStyle(
                   fontSize: 20.0,
                   color: Colors.black87,
                   fontWeight: FontWeight.normal,

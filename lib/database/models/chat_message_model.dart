@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class ChatMessageModel {
   String message;
   String sendBy;
   String timeStamp;
-  String serverTimeStamp;
+  Timestamp serverTimeStamp;
 
   ChatMessageModel(
       {required this.message,
@@ -21,5 +23,6 @@ class ChatMessageModel {
           message: map['message'],
           sendBy: map['sendby'],
           timeStamp: map['timestamp'],
-          serverTimeStamp: map['servertimestamp']);
+          serverTimeStamp: map['servertimestamp']
+          );
 }

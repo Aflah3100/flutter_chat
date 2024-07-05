@@ -42,15 +42,17 @@ class FetchUsersStreamBuilder extends StatelessWidget {
                       return //User-Widget
                           GestureDetector(
                         onTap: () async {
-                          final result = await ChatRoomDbFunc.instance
+                          final result = await FireStoreChatRoomDbFunc.instance
                               .createChatRoom(
                                   user1: loggedUser, user2: currentChatUser);
                           if (result is String) {
                             //Routing to chat screen
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (ctx) => ScreenUserChat(
-                                    chatuserName: currentChatUser.name,
-                                    loggedUserName: loggedUser.name)));
+                                      chatuserName: currentChatUser.name,
+                                      loggedUserName: loggedUser.name,
+                                      chatRoomId: result,
+                                    )));
                           } else {
                             //Error-creating/fetching-chat-room
                             showFirebaseErrorSnackBar(result, context);
