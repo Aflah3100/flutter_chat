@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
         },
         home: ScreenHome(
             loggedUser: UserModel(
-                userId: 'dummy-user-id',
-                name: 'dummy-name',
-                email: 'dummy-email')));
+                userId: 'Nz69iHD9ITXi5XoJ0L3qjiXvElu2',
+                name: 'Ahnaf Sedhique',
+                email: 'ahnafsedhique@gmail.com')));
   }
 }

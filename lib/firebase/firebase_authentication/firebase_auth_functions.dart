@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_chat/database/models/user_model.dart';
-import 'package:flutter_chat/utils/firestore_collections.dart';
+import 'package:flutter_chat/firebase/firestore/firestore_collections.dart';
 
 class FirebaseAuthFunctions {
   //Singleton

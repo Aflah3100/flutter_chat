@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/database/models/user_model.dart';
+import 'package:flutter_chat/firebase/firestore/firestore_chatroom_db_functions.dart';
 import 'package:flutter_chat/screens/chat_screen/user_chat_screen.dart';
 import 'package:flutter_chat/utils/utils.dart';
+import 'package:flutter_chat/utils/widget_functions.dart';
 
 class FetchUsersStreamBuilder extends StatelessWidget {
   const FetchUsersStreamBuilder(
@@ -34,15 +36,25 @@ class FetchUsersStreamBuilder extends StatelessWidget {
             if (snapshotLists.isNotEmpty) {
               return ListView.separated(
                   itemBuilder: (ctx, index) {
-                    UserModel currentUser =
+                    UserModel currentChatUser =
                         UserModel.fromMap(snapshotLists[index].data());
-                    if (currentUser.userId != loggedUser.userId) {
+                    if (currentChatUser.userId != loggedUser.userId) {
                       return //User-Widget
                           GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (ctx) =>
-                                  ScreenUserChat(userName: currentUser.name)));
+                        onTap: () async {
+                          final result = await ChatRoomDbFunc.instance
+                              .createChatRoom(
+                                  user1: loggedUser, user2: currentChatUser);
+                          if (result is String) {
+                            //Routing to chat screen
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (ctx) => ScreenUserChat(
+                                    chatuserName: currentChatUser.name,
+                                    loggedUserName: loggedUser.name)));
+                          } else {
+                            //Error-creating/fetching-chat-room
+                            showFirebaseErrorSnackBar(result, context);
+                          }
                         },
                         //User-Box
                         child: SizedBox(
@@ -57,7 +69,7 @@ class FetchUsersStreamBuilder extends StatelessWidget {
                                 ),
                               ),
                               title: Text(
-                                currentUser.name,
+                                currentChatUser.name,
                                 style: const TextStyle(
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w500),
@@ -79,7 +91,7 @@ class FetchUsersStreamBuilder extends StatelessWidget {
                     }
                   },
                   separatorBuilder: (ctx, index) {
-                    return SizedBox(height: height * 0.02);
+                    return SizedBox(height: height * 0.01);
                   },
                   itemCount: snapshotLists.length);
             }

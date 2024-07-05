@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_chat/database/models/user_model.dart';
-import 'package:flutter_chat/firebase/firestore/firestore_functions.dart';
+import 'package:flutter_chat/firebase/firestore/firestore_userdb_functions.dart';
 import 'package:flutter_chat/screens/home_screen/widgets/appbars.dart';
 import 'package:flutter_chat/screens/home_screen/widgets/fetch_users_stream_builder.dart';
 
@@ -49,14 +49,14 @@ class ScreenHome extends StatelessWidget {
                       loggedUser: loggedUser,
                       width: width,
                       height: height,
-                      stream: FireStoreFunctions.instance
+                      stream: FirestoreUserDbFunc.instance
                           .fetchUsersbySubstring(searchController.text));
                 } else {
                   return FetchUsersStreamBuilder(
                     loggedUser: loggedUser,
                     width: width,
                     height: height,
-                    stream: FireStoreFunctions.instance.fetchAllUsers(),
+                    stream: FirestoreUserDbFunc.instance.fetchAllUsers(),
                   );
                 }
               }),

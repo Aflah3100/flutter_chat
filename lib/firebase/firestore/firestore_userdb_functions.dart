@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_chat/utils/firestore_collections.dart';
+import 'package:flutter_chat/firebase/firestore/firestore_collections.dart';
 
-class FireStoreFunctions {
-//Singleton
-  FireStoreFunctions._internal();
-  static FireStoreFunctions instance = FireStoreFunctions._internal();
-  factory FireStoreFunctions() => instance;
+class FirestoreUserDbFunc {
+
+  //Singleton
+  FirestoreUserDbFunc._internal();
+  static FirestoreUserDbFunc instance = FirestoreUserDbFunc._internal();
+  factory FirestoreUserDbFunc() => instance;
+
 
   //Fetch all users from database
   Stream<QuerySnapshot<Map<String, dynamic>>> fetchAllUsers() {
