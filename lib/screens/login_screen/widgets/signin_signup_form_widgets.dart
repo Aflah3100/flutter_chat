@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:flutter_chat/firebase/firebase_authentication/firebase_auth_functions.dart';
 import 'package:flutter_chat/screens/home_screen/screen_home.dart';
+import 'package:flutter_chat/services/shared_preferences/shared_prefs.dart';
 import 'package:flutter_chat/utils/enums.dart';
 import 'package:flutter_chat/utils/utils.dart';
 import 'package:flutter_chat/utils/widget_functions.dart';
@@ -161,6 +162,10 @@ class SignInButton extends StatelessWidget {
 
           if (authResult is UserModel) {
             //User-Authentication-Success
+
+            //Creating Shared Preferences
+            SharedPrefs.instance.saveUserModel(user: authResult);
+
             Navigator.of(scaffoldKey.currentContext!).pushReplacement(
                 MaterialPageRoute(
                     builder: (ctx) => ScreenHome(loggedUser: authResult)));
@@ -239,6 +244,10 @@ class SignUpButton extends StatelessWidget {
 
           if (authResult is UserModel) {
             //Registration Success
+
+            //Creating Shared Preferences
+            SharedPrefs.instance.saveUserModel(user: authResult);
+
             Navigator.of(scaffoldKey.currentContext!).pushReplacement(
                 MaterialPageRoute(
                     builder: (ctx) => ScreenHome(loggedUser: authResult)));

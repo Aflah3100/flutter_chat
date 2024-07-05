@@ -1,10 +1,10 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:flutter_chat/firebase/config/firebase_options.dart';
 import 'package:flutter_chat/screens/forgot_password_screen/reset_password_screen.dart';
 import 'package:flutter_chat/screens/home_screen/screen_home.dart';
 import 'package:flutter_chat/screens/login_screen/login_signup_screen.dart';
+import 'package:flutter_chat/services/shared_preferences/shared_prefs.dart';
 import 'package:flutter_chat/utils/utils.dart';
 import 'package:flutter_chat/utils/enums.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -39,10 +39,18 @@ class MyApp extends StatelessWidget {
               ScreenSigninSignup(loginType: LoginType.singup),
           resetPasswordScreen: (ctx) => ScreenResetPassword()
         },
-        home: ScreenHome(
-            loggedUser: UserModel(
-                userId: 'Nz69iHD9ITXi5XoJ0L3qjiXvElu2',
-                name: 'Ahnaf Sedhique',
-                email: 'ahnafsedhique@gmail.com')));
+        home: FutureBuilder(
+            future: SharedPrefs.instance.getUserModel(),
+            builder: (ctx, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else {
+                if (snapshot.hasData) {
+                  return ScreenHome(loggedUser: snapshot.data!);
+                } else {
+                  return ScreenSigninSignup(loginType: LoginType.singup);
+                }
+              }
+            }));
   }
 }

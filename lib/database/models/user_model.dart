@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class UserModel {
   UserModel({
     required this.userId,
@@ -17,4 +19,9 @@ class UserModel {
         name: userMap['name'],
         email: userMap['email'],
       );
+
+  String toJson() => json.encode(toMap());
+
+  factory UserModel.fromJson(String source) =>
+      UserModel.fromMap(json.decode(source));
 }

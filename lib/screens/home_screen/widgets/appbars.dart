@@ -1,4 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/firebase/firebase_authentication/firebase_auth_functions.dart';
+import 'package:flutter_chat/services/shared_preferences/shared_prefs.dart';
+import 'package:flutter_chat/utils/utils.dart';
+import 'package:flutter_chat/utils/widget_functions.dart';
 
 class ChatsAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ChatsAppBar(
@@ -6,12 +11,14 @@ class ChatsAppBar extends StatelessWidget implements PreferredSizeWidget {
       required this.width,
       required this.height,
       required this.searchNotifer,
-      required this.searchController});
+      required this.searchController,
+      required this.scaffoldKey});
 
   final double width;
   final double height;
   final ValueNotifier<bool> searchNotifer;
   final TextEditingController searchController;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
 //Search App bar function -> returns appbar with search text field
   AppBar getSearchAppBar(
@@ -104,7 +111,20 @@ class ChatsAppBar extends StatelessWidget implements PreferredSizeWidget {
         Padding(
           padding: EdgeInsets.only(right: width * 0.02),
           child: GestureDetector(
-            onTap: () {},
+            onTap: () async {
+              final result = await FirebaseAuthFunctions.instance.signOutUser();
+
+              if (result) {
+                //Sign-Out-Success
+                SharedPrefs.instance.deleteUserModel();
+
+                Navigator.of(scaffoldKey.currentContext!)
+                    .popAndPushNamed(signinScreen);
+              } else {
+                //Sign-Out-Exception
+                showFirebaseErrorSnackBar(result, scaffoldKey.currentContext!);
+              }
+            },
             child: Center(
                 child: Icon(
               Icons.logout_outlined,

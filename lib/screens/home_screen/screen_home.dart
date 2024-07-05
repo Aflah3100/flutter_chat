@@ -4,7 +4,6 @@ import 'package:flutter_chat/firebase/firestore/firestore_userdb_functions.dart'
 import 'package:flutter_chat/screens/home_screen/widgets/appbars.dart';
 import 'package:flutter_chat/screens/home_screen/widgets/fetch_users_stream_builder.dart';
 
-
 // ignore: must_be_immutable
 class ScreenHome extends StatelessWidget {
   ScreenHome({super.key, required this.loggedUser});
@@ -18,18 +17,22 @@ class ScreenHome extends StatelessWidget {
   //LoggedIn-User-Details (UserModel Object)
   UserModel loggedUser;
 
+  //Keys
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height * 1;
     final width = MediaQuery.of(context).size.width * 1;
     return Scaffold(
+        key: scaffoldKey,
         backgroundColor: const Color(0xff492E87),
         appBar: ChatsAppBar(
           width: width,
           height: height,
           searchNotifer: searchNotifier,
           searchController: searchController,
+          scaffoldKey: scaffoldKey,
         ),
         //Base-Container
         body: Container(

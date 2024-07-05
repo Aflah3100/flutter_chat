@@ -76,4 +76,14 @@ class FirebaseAuthFunctions {
       return e;
     }
   }
+
+  //Sign-Out-User from firebase
+  Future<dynamic> signOutUser() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      return true;
+    } on FirebaseException catch (e) {
+      return e;
+    }
+  }
 }
