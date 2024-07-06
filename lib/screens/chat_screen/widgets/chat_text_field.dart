@@ -4,7 +4,7 @@ import 'package:flutter_chat/database/models/chat_message_model.dart';
 import 'package:flutter_chat/firebase/firestore/firestore_chatroom_db_functions.dart';
 import 'package:flutter_chat/utils/widget_functions.dart';
 import 'package:intl/intl.dart';
-
+import 'package:uuid/uuid.dart';
 
 // ignore: must_be_immutable
 class ChatTextField extends StatelessWidget {
@@ -53,6 +53,7 @@ class ChatTextField extends StatelessWidget {
                             String formattedDate =
                                 DateFormat('h:mm a').format(dateTimeNow);
                             ChatMessageModel messageModel = ChatMessageModel(
+                                messgId: const Uuid().v4(),
                                 message: messageController.text,
                                 sendBy: loggedUserName,
                                 timeStamp: formattedDate,

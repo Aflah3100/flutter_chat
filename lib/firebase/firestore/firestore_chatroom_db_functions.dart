@@ -71,7 +71,8 @@ class FireStoreChatRoomDbFunc {
           .collection(chatRoomsCollection)
           .doc(chatRoomId)
           .collection(chatsCollection)
-          .add(messageModel.toMap());
+          .doc(messageModel.messgId)
+          .set(messageModel.toMap());
       //Update last message
       await _updateLastMessage(
           chatRoomId: chatRoomId,
@@ -95,7 +96,7 @@ class FireStoreChatRoomDbFunc {
         .snapshots();
   }
 
-  //Update last message in ChatRoom
+  //Update last message details in ChatRoom
   Future<dynamic> _updateLastMessage({
     required String chatRoomId,
     required String lastMessage,
@@ -141,6 +142,22 @@ class FireStoreChatRoomDbFunc {
       return chatRoomSnapshot.data()?['lastmessagetime'];
     } else {
       return '';
+    }
+  }
+
+  //Delete a message from the chatroom
+  Future<dynamic> deleteMessage(
+      {required String chatRoomId, required String messgId}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(chatRoomsCollection)
+          .doc(chatRoomId)
+          .collection(chatsCollection)
+          .doc(messgId)
+          .delete();
+      return true;
+    } on FirebaseException catch (e) {
+      return e;
     }
   }
 }

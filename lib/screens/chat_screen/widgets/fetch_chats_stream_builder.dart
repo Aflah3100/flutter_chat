@@ -10,12 +10,14 @@ class FetchChatsStreamBuilder extends StatelessWidget {
     required this.loggedUserName,
     required this.height,
     required this.width,
+    required this.scaffoldKey
   });
 
   final String chatRoomId;
   final String loggedUserName;
   final double height;
   final double width;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +46,15 @@ class FetchChatsStreamBuilder extends StatelessWidget {
                   itemBuilder: (ctx, index) {
                     ChatMessageModel currentChat =
                         ChatMessageModel.fromMap(snapShotsLists[index].data());
+                    
                     //Send-Chat-Widget
                     if (currentChat.sendBy == loggedUserName) {
                       return SentMessageBox(
-                          height: height,
-                          width: width,
-                          messageModel: currentChat);
+                        height: height,
+                        width: width,
+                        messageModel: currentChat,
+                        chatRoomId: chatRoomId, scaffoldKey: scaffoldKey,
+                      );
                     }
                     //Recieved-Chat-Widget
                     else {

@@ -64,10 +64,12 @@ class ScreenUserChat extends StatelessWidget {
             Expanded(
               //Fetch-Chats-Stream
               child: FetchChatsStreamBuilder(
-                  chatRoomId: chatRoomId,
-                  loggedUserName: loggedUserName,
-                  height: height,
-                  width: width),
+                chatRoomId: chatRoomId,
+                loggedUserName: loggedUserName,
+                height: height,
+                width: width,
+                scaffoldKey: scaffoldKey,
+              ),
             ),
 
             //Chat-Text-Field
