@@ -12,15 +12,18 @@ class FetchUsersStreamBuilder extends StatelessWidget {
       required this.loggedUser,
       required this.width,
       required this.height,
-      required this.stream});
+      required this.stream,
+      required this.scaffoldKey});
 
   final Stream<QuerySnapshot<Map<String, dynamic>>> stream;
   final UserModel loggedUser;
   final double width;
   final double height;
+  final GlobalKey<ScaffoldState> scaffoldKey;
 
   @override
   Widget build(BuildContext context) {
+    bool userClicked = false;
     return StreamBuilder(
         stream: stream,
         builder: (ctx, userSnapshots) {
@@ -42,20 +45,26 @@ class FetchUsersStreamBuilder extends StatelessWidget {
                       return //User-Widget
                           GestureDetector(
                         onTap: () async {
-                          final result = await FireStoreChatRoomDbFunc.instance
-                              .createChatRoom(
-                                  user1: loggedUser, user2: currentChatUser);
-                          if (result is String) {
-                            //Routing to chat screen
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (ctx) => ScreenUserChat(
-                                      chatuserName: currentChatUser.name,
-                                      loggedUserName: loggedUser.name,
-                                      chatRoomId: result,
-                                    )));
-                          } else {
-                            //Error-creating/fetching-chat-room
-                            showFirebaseErrorSnackBar(result, context);
+                          if (!userClicked) {
+                            userClicked=true;
+                            final result = await FireStoreChatRoomDbFunc
+                                .instance
+                                .createChatRoom(
+                                    user1: loggedUser, user2: currentChatUser);
+                            if (result is String) {
+                              //Routing to chat screen
+                              Navigator.of(scaffoldKey.currentContext!)
+                                  .pushReplacement(MaterialPageRoute(
+                                      builder: (ctx) => ScreenUserChat(
+                                            chatuserName: currentChatUser.name,
+                                            loggedUserName: loggedUser.name,
+                                            chatRoomId: result,
+                                          )));
+                            } else {
+                              //Error-creating/fetching-chat-room
+                              showFirebaseErrorSnackBar(
+                                  result, scaffoldKey.currentContext!);
+                            }
                           }
                         },
                         //User-Box

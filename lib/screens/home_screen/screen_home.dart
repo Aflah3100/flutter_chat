@@ -49,17 +49,20 @@ class ScreenHome extends StatelessWidget {
               builder: (ctx, val, _) {
                 if (val) {
                   return FetchUsersStreamBuilder(
-                      loggedUser: loggedUser,
-                      width: width,
-                      height: height,
-                      stream: FirestoreUserDbFunc.instance
-                          .fetchUsersbySubstring(searchController.text));
+                    loggedUser: loggedUser,
+                    width: width,
+                    height: height,
+                    stream: FirestoreUserDbFunc.instance
+                        .fetchUsersbySubstring(searchController.text),
+                    scaffoldKey: scaffoldKey,
+                  );
                 } else {
                   return FetchUsersStreamBuilder(
                     loggedUser: loggedUser,
                     width: width,
                     height: height,
                     stream: FirestoreUserDbFunc.instance.fetchAllUsers(),
+                    scaffoldKey: scaffoldKey,
                   );
                 }
               }),

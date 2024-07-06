@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:flutter_chat/screens/chat_screen/widgets/chat_text_field.dart';
 import 'package:flutter_chat/screens/chat_screen/widgets/fetch_chats_stream_builder.dart';
+import 'package:flutter_chat/screens/home_screen/screen_home.dart';
+import 'package:flutter_chat/services/shared_preferences/shared_prefs.dart';
 
 // ignore: must_be_immutable
 class ScreenUserChat extends StatelessWidget {
@@ -27,6 +30,17 @@ class ScreenUserChat extends StatelessWidget {
       backgroundColor: const Color(0xff492E87),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
+        leading: IconButton(
+            onPressed: () async {
+              UserModel? loggedUser = await SharedPrefs.instance.getUserModel();
+              Navigator.of(scaffoldKey.currentContext!).pushReplacement(
+                  MaterialPageRoute(
+                      builder: (ctx) => ScreenHome(loggedUser: loggedUser!)));
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white54,
+            )),
         title: Text(
           chatuserName,
           style: const TextStyle(
