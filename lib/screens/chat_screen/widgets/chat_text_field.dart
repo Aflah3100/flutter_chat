@@ -51,7 +51,7 @@ class ChatTextField extends StatelessWidget {
                             //Send-Chat-to-chatroom
                             DateTime dateTimeNow = DateTime.now();
                             String formattedDate =
-                                DateFormat('h:mma').format(dateTimeNow);
+                                DateFormat('h:mm a').format(dateTimeNow);
                             ChatMessageModel messageModel = ChatMessageModel(
                                 message: messageController.text,
                                 sendBy: loggedUserName,

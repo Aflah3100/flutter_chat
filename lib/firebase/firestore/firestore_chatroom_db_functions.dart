@@ -72,6 +72,12 @@ class FireStoreChatRoomDbFunc {
           .doc(chatRoomId)
           .collection(chatsCollection)
           .add(messageModel.toMap());
+      //Update last message
+      await _updateLastMessage(
+          chatRoomId: chatRoomId,
+          lastMessage: messageModel.message,
+          lastMessgeTime: messageModel.timeStamp);
+
       return true;
     } on FirebaseException catch (e) {
       return e;
@@ -85,7 +91,56 @@ class FireStoreChatRoomDbFunc {
         .collection(chatRoomsCollection)
         .doc(chatRoomId)
         .collection(chatsCollection)
-        .orderBy('servertimestamp',descending: false)
+        .orderBy('servertimestamp', descending: false)
         .snapshots();
+  }
+
+  //Update last message in ChatRoom
+  Future<dynamic> _updateLastMessage({
+    required String chatRoomId,
+    required String lastMessage,
+    required String lastMessgeTime,
+  }) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(chatRoomsCollection)
+          .doc(chatRoomId)
+          .update(
+              {"lastmessage": lastMessage, "lastmessagetime": lastMessgeTime});
+
+      return true;
+    } on FirebaseException catch (e) {
+      return e;
+    }
+  }
+
+  //Retieve last message if chat room exists
+  Future<String> retrieveLastMessageIfExists(
+      {required UserModel user1, required UserModel user2}) async {
+    final chatRoomId = _createChatRoomId(user1: user1, user2: user2);
+    final chatRoomSnapshot = await FirebaseFirestore.instance
+        .collection(chatRoomsCollection)
+        .doc(chatRoomId)
+        .get();
+    if (chatRoomSnapshot.exists) {
+      return chatRoomSnapshot.data()?['lastmessage'];
+    } else {
+      return '';
+    }
+  }
+
+  //Retieve last message time if chat room exists
+  Future<String> retrieveLastMessageTimeIfExists(
+      {required UserModel user1, required UserModel user2}) async {
+    final chatRoomId = _createChatRoomId(user1: user1, user2: user2);
+    final chatRoomSnapshot = await FirebaseFirestore.instance
+        .collection(chatRoomsCollection)
+        .doc(chatRoomId)
+        .get();
+    if (chatRoomSnapshot.exists) {
+      return chatRoomSnapshot.data()?['lastmessagetime'];
+    } else {
+      return '';
+    }
   }
 }
