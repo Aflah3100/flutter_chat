@@ -96,7 +96,8 @@ class FetchUsersStreamBuilder extends StatelessWidget {
                                   currentChatUser.name,
                                   style: const TextStyle(
                                       fontSize: 20.0,
-                                      fontWeight: FontWeight.w500),
+                                      color: Colors.black87,
+                                      fontWeight: FontWeight.w600),
                                 ),
                                 subtitle: MessageFutureBuilder(
                                   lastMessage: lastMessage,
@@ -154,7 +155,7 @@ class MessageFutureBuilder extends StatelessWidget {
                 ? Text(
                     (lastMessage.isEmpty) ? 'Click to Chat' : lastMessage,
                     style:
-                        const TextStyle(fontSize: 16.0, color: Colors.black45),
+                        const TextStyle(fontSize: 16.0, color: Colors.black45,fontWeight: FontWeight.w500),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   )
@@ -162,7 +163,7 @@ class MessageFutureBuilder extends StatelessWidget {
                 : Text(
                     lastMessage.isEmpty ? '' : lastMessage,
                     style:
-                        const TextStyle(fontSize: 14.0, color: Colors.black54),
+                        const TextStyle(fontSize: 14.0, color: Colors.black54,fontWeight: FontWeight.w600),
                   );
           }
 
