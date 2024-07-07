@@ -3,6 +3,8 @@ import 'package:flutter_chat/firebase/firebase_authentication/firebase_auth_func
 import 'package:flutter_chat/utils/utils.dart';
 import 'package:flutter_chat/utils/widget_functions.dart';
 
+
+//ScreenResetPassword -> For resetting password using reset link
 // ignore: must_be_immutable
 class ScreenResetPassword extends StatelessWidget {
   ScreenResetPassword({super.key});

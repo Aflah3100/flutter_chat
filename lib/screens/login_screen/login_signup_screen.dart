@@ -3,6 +3,8 @@ import 'package:flutter_chat/screens/login_screen/widgets/signin_signup_form_wid
 import 'package:flutter_chat/screens/login_screen/widgets/top_container.dart';
 import 'package:flutter_chat/utils/enums.dart';
 
+//Signin Signup screen for users to login and out from the app
+
 // ignore: must_be_immutable
 class ScreenSigninSignup extends StatelessWidget {
   ScreenSigninSignup({super.key, required LoginType loginType})
@@ -22,7 +24,7 @@ class ScreenSigninSignup extends StatelessWidget {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   //Validate-UserDetails-Function
-  dynamic validateUserDetails({
+  dynamic _validateUserDetails({
     String? name,
     required String email,
     required String password,
@@ -170,7 +172,7 @@ class ScreenSigninSignup extends StatelessWidget {
                                         width: width,
                                         height: height,
                                         validateUserDetails:
-                                            validateUserDetails,
+                                            _validateUserDetails,
                                         emailController: emailController,
                                         passwordController: passwordController,
                                         errorTextNotifier: errorTextNotifier,
@@ -207,7 +209,7 @@ class ScreenSigninSignup extends StatelessWidget {
                               child: SignUpButton(
                                   width: width,
                                   height: height,
-                                  validateUserDetails: validateUserDetails,
+                                  validateUserDetails: _validateUserDetails,
                                   nameController: nameController,
                                   confirmPasswordController:
                                       confirmPasswordController,

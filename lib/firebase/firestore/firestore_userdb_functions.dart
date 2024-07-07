@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_chat/firebase/firestore/firestore_collections.dart';
 
+// FirestoreUserDbFunc -> for user functionalities
 class FirestoreUserDbFunc {
 
   //Singleton

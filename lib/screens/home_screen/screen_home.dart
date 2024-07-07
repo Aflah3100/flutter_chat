@@ -4,6 +4,8 @@ import 'package:flutter_chat/firebase/firestore/firestore_userdb_functions.dart'
 import 'package:flutter_chat/screens/home_screen/widgets/appbars.dart';
 import 'package:flutter_chat/screens/home_screen/widgets/fetch_users_stream_builder.dart';
 
+
+//Home Screen for displaying all users registered with the app
 // ignore: must_be_immutable
 class ScreenHome extends StatelessWidget {
   ScreenHome({super.key, required this.loggedUser});

@@ -7,6 +7,8 @@ import 'package:flutter_chat/utils/enums.dart';
 import 'package:flutter_chat/utils/utils.dart';
 import 'package:flutter_chat/utils/widget_functions.dart';
 
+
+//For fetching users from firestore
 class FetchUsersStreamBuilder extends StatelessWidget {
   const FetchUsersStreamBuilder(
       {super.key,

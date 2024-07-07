@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:flutter_chat/firebase/firestore/firestore_collections.dart';
 
+
+//FirebaseAuthFunctions class -> authentication functions for authenticating users 
 class FirebaseAuthFunctions {
   //Singleton
   FirebaseAuthFunctions._internal();

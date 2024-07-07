@@ -7,6 +7,8 @@ import 'package:flutter_chat/database/models/chatroom_model.dart';
 import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:flutter_chat/firebase/firestore/firestore_collections.dart';
 
+
+//FireStoreChatRoomDbFunc -> for chatroom functionalities
 class FireStoreChatRoomDbFunc {
   //Singleton
   FireStoreChatRoomDbFunc._internal();
@@ -76,6 +78,7 @@ class FireStoreChatRoomDbFunc {
       //Update last message
       await _updateLastMessage(
           chatRoomId: chatRoomId,
+          lastMessageId: messageModel.messgId,
           lastMessage: messageModel.message,
           lastMessgeTime: messageModel.timeStamp);
 
@@ -94,25 +97,6 @@ class FireStoreChatRoomDbFunc {
         .collection(chatsCollection)
         .orderBy('servertimestamp', descending: false)
         .snapshots();
-  }
-
-  //Update last message details in ChatRoom
-  Future<dynamic> _updateLastMessage({
-    required String chatRoomId,
-    required String lastMessage,
-    required String lastMessgeTime,
-  }) async {
-    try {
-      await FirebaseFirestore.instance
-          .collection(chatRoomsCollection)
-          .doc(chatRoomId)
-          .update(
-              {"lastmessage": lastMessage, "lastmessagetime": lastMessgeTime});
-
-      return true;
-    } on FirebaseException catch (e) {
-      return e;
-    }
   }
 
   //Retieve last message if chat room exists
@@ -149,12 +133,61 @@ class FireStoreChatRoomDbFunc {
   Future<dynamic> deleteMessage(
       {required String chatRoomId, required String messgId}) async {
     try {
+      final chatRoomSnapshot = await FirebaseFirestore.instance
+          .collection(chatRoomsCollection)
+          .doc(chatRoomId)
+          .get();
+      if (chatRoomSnapshot.data()?['lastmessageid'] == messgId) {
+        //delete-last-message-from-chatroom
+        _deleteLastMessage(chatRoomId: chatRoomId);
+      }
       await FirebaseFirestore.instance
           .collection(chatRoomsCollection)
           .doc(chatRoomId)
           .collection(chatsCollection)
           .doc(messgId)
           .delete();
+      return true;
+    } on FirebaseException catch (e) {
+      return e;
+    }
+  }
+
+  //Update last message details in ChatRoom
+  Future<dynamic> _updateLastMessage({
+    required String chatRoomId,
+    required String lastMessageId,
+    required String lastMessage,
+    required String lastMessgeTime,
+  }) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(chatRoomsCollection)
+          .doc(chatRoomId)
+          .update({
+        "lastmessage": lastMessage,
+        "lastmessageid": lastMessageId,
+        "lastmessagetime": lastMessgeTime
+      });
+
+      return true;
+    } on FirebaseException catch (e) {
+      return e;
+    }
+  }
+
+  //Delete-last-message-from-chatroom
+  Future<dynamic> _deleteLastMessage({required String chatRoomId}) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection(chatRoomsCollection)
+          .doc(chatRoomId)
+          .update({
+        "lastmessage": "deleted",
+        "lastmessageid": '',
+        "lastmessagetime": ''
+      });
+
       return true;
     } on FirebaseException catch (e) {
       return e;

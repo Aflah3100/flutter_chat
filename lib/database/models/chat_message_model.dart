@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+//Chat message model -> storing chat in chatroom
 class ChatMessageModel {
   String messgId;
   String message;

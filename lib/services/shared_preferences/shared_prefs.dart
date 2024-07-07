@@ -1,6 +1,8 @@
 import 'package:flutter_chat/database/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+//Shared Preferences helper class for creating fetching and deleting shared pref values
 class SharedPrefs {
   //Keys
   final String _userModelkey = 'usermodel';
@@ -27,7 +29,6 @@ class SharedPrefs {
   }
 
   // delete user model from shared pref
-
   Future<void> deleteUserModel() async {
     final sharedPrefObject = await SharedPreferences.getInstance();
     sharedPrefObject.remove(_userModelkey);

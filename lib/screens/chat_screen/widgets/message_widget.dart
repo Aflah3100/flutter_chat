@@ -19,6 +19,7 @@ class SentMessageBox extends StatelessWidget {
   final String chatRoomId;
   final GlobalKey<ScaffoldState> scaffoldKey;
 
+  //Alert-Dialog-For-Deleting-Chat
   Future<void> _showDeleteConfirmationDialog(
       BuildContext context, String chatRoomId, String messgId) async {
     return showDialog<void>(
@@ -98,15 +99,28 @@ class SentMessageBox extends StatelessWidget {
                 bottomLeft: Radius.circular(10.0),
               ),
             ),
-            child: Wrap(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                //Display-chat-message-text
                 Text(
-                  //Display-chat-message
                   messageModel.message,
                   style: const TextStyle(
-                    fontSize: 20.0,
+                    fontSize: 18.0,
                     color: Colors.black87,
                     fontWeight: FontWeight.normal,
+                  ),
+                ),
+                const SizedBox(
+                  height: 5.0,
+                ),
+                //Display-chat-time
+                Text(
+                  messageModel.timeStamp,
+                  style: const TextStyle(
+                    fontSize: 11.0,
+                    color: Colors.black45,
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ],
@@ -147,15 +161,24 @@ class RecievedMessageBox extends StatelessWidget {
               bottomRight: Radius.circular(10.0),
             ),
           ),
-          child: Wrap(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
                 //Display-chat-message
                 messageModel.message,
                 style: const TextStyle(
-                  fontSize: 20.0,
+                  fontSize: 18.0,
                   color: Colors.black87,
                   fontWeight: FontWeight.normal,
+                ),
+              ),
+              Text(
+                messageModel.timeStamp,
+                style: const TextStyle(
+                  fontSize: 11.0,
+                  color: Colors.black45,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
             ],

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+//User model -> storing users registered with the app
 class UserModel {
   UserModel({
     required this.userId,

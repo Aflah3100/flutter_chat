@@ -5,6 +5,8 @@ import 'package:flutter_chat/screens/chat_screen/widgets/fetch_chats_stream_buil
 import 'package:flutter_chat/screens/home_screen/screen_home.dart';
 import 'package:flutter_chat/services/shared_preferences/shared_prefs.dart';
 
+
+//ScreenUserChat -> To display chats send and recieved b/w 2 users
 // ignore: must_be_immutable
 class ScreenUserChat extends StatelessWidget {
   ScreenUserChat(
@@ -12,7 +14,7 @@ class ScreenUserChat extends StatelessWidget {
       required this.chatuserName,
       required this.loggedUserName,
       required this.chatRoomId});
-  //User and chat details
+  //Users and chat details
   String chatuserName, loggedUserName, chatRoomId;
 
   //keys
