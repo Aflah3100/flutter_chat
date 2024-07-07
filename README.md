@@ -59,3 +59,24 @@ To run the project:
 4. Run the Flutter app:
 - flutter pub get
 - flutter run
+
+## Screenshots
+
+### Signup Screen
+<img src="screenshots/signup_screen.png" alt="Signup Screen" width="300"/>
+
+### Login Screen
+<img src="screenshots/login_screen.png" alt="Login Screen" width="300"/>
+
+### Forgot Password Screen
+<img src="screenshots/forgot_password_screen.png" alt="Forgot Password Screen" width="300"/>
+
+### Home Screen 
+<img src="screenshots/home_screen.png" alt="Home Screen" width="300"/>
+
+### Chatting b/w 2 users
+<img src="screenshots/chat_screen.png" alt="Chat Screen" width="300"/>
+
+### Searching for a user
+<img src="screenshots/search_user.png" alt="Searching a user" width="300"/>
+
