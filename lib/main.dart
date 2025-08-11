@@ -13,7 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   //Loading env variables & connecting to firebase.
-  await dotenv.load(fileName: environmentvariables);
+  // await dotenv.load(fileName: environmentvariables);
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }

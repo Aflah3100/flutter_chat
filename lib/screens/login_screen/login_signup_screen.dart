@@ -88,107 +88,109 @@ class ScreenSigninSignup extends StatelessWidget {
                         //User-Details-Form
                         child: Form(
                           key: formKey,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              //Name-Text
-                              (value == LoginType.singup)
-                                  ? SignInSignUpText(
-                                      text: 'Name',
-                                    )
-                                  : const SizedBox(),
-                              SizedBox(
-                                height: height * 0.005,
-                              ),
-                              //Name-Text-Field
-                              (value == LoginType.singup)
-                                  ? SignInSignUpTextFormField(
-                                      controller: nameController,
-                                      formIcon: Icons.person_2_outlined,
-                                      obscureText: false,
-                                    )
-                                  : const SizedBox(),
-                              SizedBox(height: height * 0.01),
-
-                              //Email-Text
-                              SignInSignUpText(text: 'Email'),
-                              SizedBox(
-                                height: height * 0.005,
-                              ),
-                              //Email-Text-Field
-                              SignInSignUpTextFormField(
-                                controller: emailController,
-                                formIcon: Icons.email_outlined,
-                                obscureText: false,
-                              ),
-                              SizedBox(
-                                height: height * 0.01,
-                              ),
-
-                              //Password-Text
-                              SignInSignUpText(text: 'Password'),
-                              SizedBox(
-                                height: height * 0.005,
-                              ),
-                              //Password-Text-Field
-                              SignInSignUpTextFormField(
-                                controller: passwordController,
-                                formIcon: Icons.password_outlined,
-                                obscureText: true,
-                              ),
-                              SizedBox(
-                                height: height * 0.01,
-                              ),
-
-                              //Forgot-Password-Text
-                              (value == LoginType.signin)
-                                  ? ForgotPasswordTextButton(width: width)
-                                  : const SizedBox(),
-
-                              //Confirm-Password-Text
-                              (value == LoginType.singup)
-                                  ? SignInSignUpText(text: 'Confirm Password')
-                                  : const SizedBox(),
-                              SizedBox(
-                                height: height * 0.005,
-                              ),
-                              //Confirm-Password-Text-Field
-                              (value == LoginType.singup)
-                                  ? SignInSignUpTextFormField(
-                                      controller: confirmPasswordController,
-                                      formIcon: Icons.password_outlined,
-                                      obscureText: true,
-                                    )
-                                  : const SizedBox(),
-                              SizedBox(
-                                height: height * 0.03,
-                              ),
-
-                              //Login-Button
-                              (value == LoginType.signin)
-                                  ? Center(
-                                      child: SignInButton(
-                                        width: width,
-                                        height: height,
-                                        validateUserDetails:
-                                            _validateUserDetails,
-                                        emailController: emailController,
-                                        passwordController: passwordController,
-                                        errorTextNotifier: errorTextNotifier,
-                                        scaffoldKey: scaffoldKey,
-                                      ),
-                                    )
-                                  : const SizedBox(),
-                              SizedBox(
-                                height: ((value == LoginType.signin))
-                                    ? height * 0.03
-                                    : null,
-                              ),
-
-                              //Login-SignUp-Text-Row
-                              SignSignUpTextRow(loginNotifier: loginNotifier)
-                            ],
+                          child: SingleChildScrollView(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                //Name-Text
+                                (value == LoginType.singup)
+                                    ? SignInSignUpText(
+                                        text: 'Name',
+                                      )
+                                    : const SizedBox(),
+                                SizedBox(
+                                  height: height * 0.005,
+                                ),
+                                //Name-Text-Field
+                                (value == LoginType.singup)
+                                    ? SignInSignUpTextFormField(
+                                        controller: nameController,
+                                        formIcon: Icons.person_2_outlined,
+                                        obscureText: false,
+                                      )
+                                    : const SizedBox(),
+                                SizedBox(height: height * 0.01),
+                            
+                                //Email-Text
+                                SignInSignUpText(text: 'Email'),
+                                SizedBox(
+                                  height: height * 0.005,
+                                ),
+                                //Email-Text-Field
+                                SignInSignUpTextFormField(
+                                  controller: emailController,
+                                  formIcon: Icons.email_outlined,
+                                  obscureText: false,
+                                ),
+                                SizedBox(
+                                  height: height * 0.01,
+                                ),
+                            
+                                //Password-Text
+                                SignInSignUpText(text: 'Password'),
+                                SizedBox(
+                                  height: height * 0.005,
+                                ),
+                                //Password-Text-Field
+                                SignInSignUpTextFormField(
+                                  controller: passwordController,
+                                  formIcon: Icons.password_outlined,
+                                  obscureText: true,
+                                ),
+                                SizedBox(
+                                  height: height * 0.01,
+                                ),
+                            
+                                //Forgot-Password-Text
+                                (value == LoginType.signin)
+                                    ? ForgotPasswordTextButton(width: width)
+                                    : const SizedBox(),
+                            
+                                //Confirm-Password-Text
+                                (value == LoginType.singup)
+                                    ? SignInSignUpText(text: 'Confirm Password')
+                                    : const SizedBox(),
+                                SizedBox(
+                                  height: height * 0.005,
+                                ),
+                                //Confirm-Password-Text-Field
+                                (value == LoginType.singup)
+                                    ? SignInSignUpTextFormField(
+                                        controller: confirmPasswordController,
+                                        formIcon: Icons.password_outlined,
+                                        obscureText: true,
+                                      )
+                                    : const SizedBox(),
+                                SizedBox(
+                                  height: height * 0.03,
+                                ),
+                            
+                                //Login-Button
+                                (value == LoginType.signin)
+                                    ? Center(
+                                        child: SignInButton(
+                                          width: width,
+                                          height: height,
+                                          validateUserDetails:
+                                              _validateUserDetails,
+                                          emailController: emailController,
+                                          passwordController: passwordController,
+                                          errorTextNotifier: errorTextNotifier,
+                                          scaffoldKey: scaffoldKey,
+                                        ),
+                                      )
+                                    : const SizedBox(),
+                                SizedBox(
+                                  height: ((value == LoginType.signin))
+                                      ? height * 0.03
+                                      : null,
+                                ),
+                            
+                                //Login-SignUp-Text-Row
+                                SignSignUpTextRow(loginNotifier: loginNotifier)
+                              ],
+                            ),
                           ),
                         ),
                       );
